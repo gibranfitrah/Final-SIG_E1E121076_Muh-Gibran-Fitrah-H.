@@ -1,0 +1,112 @@
+1. Membuat Folder di Htdocs dengan nama TugasSig
+2. Menjalankan dengan Menggunakan XAMPP, lalu membuka di Browser -> Localhost/Nama File/
+3. Membuka Text Editor kita, lalu membuat file baru didalam folder tugas, misal Tugas-Sig.php
+4. Membuat code HTML seperti biasa, pada bagian title ubah menjadi -> Tugas SIG, yang tadinya itu DOCUMENT
+5. Lalu membuka situs dari Leaflet.JS (https://leafletjs.com/index.html) dan langsung ke arah bawah pada bagian Overview
+6. di bawah ada kode dari leafletjs nya -> var map = L.map('map').setView([51.505, -0.09], 13);
+                                            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                                        }).addTo(map);
+        -> Dicopy lalu Pastekan di dalam <body></body
+7. Membuat Tag -> <div id="map"></div> <- untuk ID dari Map nya
+8. Membuat Style diatas dari Head nya ->  <style type="text/css">
+                                            #map {
+                                                    position: absolute;
+                                                    right: 0;
+                                                    left: 0;
+                                                    bottom: 0;
+                                                    top: 0;
+                                                }
+                                                </style>
+9. Kembali ke situs Leaflet.js nya, lalu membuka Download, ke -> Using a Hosted Version of Leaflet, lalu copy bagian <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+                                                                                                                        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    Dan Pastekan diatas dari Style nya.
+10. Refresh dulu halaman tugas yang sudah dibuat pada Localhost
+
+11. Ke google maps lalu cari lokasi pasar, disini saya menggunakan lokasi dari Pasar Asinua Untuk tampilan Marker bawaan dari leafletjs nya yang berwarna biru.
+12. dengan cara mengganti setView([51.505, -0.09]) menjadi -> setView([-3.8528192,122.0708205] , 5);
+13. Dan Refresh, dan lokasi marker akan berubah, dan menunjukkan ke arah yang telah ditentukan.
+
+14. Membuat File baru -> index2.php -> jangan lupa membuat folder baru yang berisikan icon marker untuk menentukan lokasi berikutnya
+15. Code yang di file pertama -> Tugas-Sig.php di copy semua, lalu dipastekan ke file kedua -> index2.php
+16. Lalu pada bagian file kedua, kita membuat Marker, dengan menambahkan -> var marker = L.marker([lat,lng]).addTo(map); // lat = latitude, lng = longitude
+17. Mencari latitude dan longitude di google maps, cari lokasi, misal pasar apa?, saya disini memilih pasar wawotobi dan Rahabangga
+18. Copykan url dari maps dari lokasi pasar tersebut cth : -3.8757792,122.1066099 -> pasar Asinua
+19. lalu pastekan di -> var marker = L.marker([lat,lng]).addTo(map);, pastekan didalam lat, dan lng nya.
+20. masuk ke localhost lalu ganti ke file yang kedua -> Localhost/index2.php
+
+21. Menambahkan array -> // Menambahkan Array
+      var lokasi_array = [
+        // Pasar Wawotobi <-- Tulisan Pasar Wawotobi itu sebagai keterangan, jika di klik marker nya akan langsung kelihatan ini pasar apa
+        ["Pasar Wawotobi", -3.8757792,122.1066099], <-- lat dan lng dari url maps pasar nya
+        // Pasar Rahabangga <-- Tulisan Pasar Rahabangga itu sebagai keterangan, jika di klik marker nya akan langsung kelihatan ini pasar apa
+        ["Pasar Rahabangga", -3.870854,122.0277941] <-- lat dan lng dari url maps pasar nya
+      ];
+
+22. Menampilkan peta dengan menggunakan for 
+// Menampilkan Peta Menggunakan For
+      for(var i=0; i<lokasi_array.length; i++){ --> length = panjangnya, i++ = ada 2 data
+        marker = new L.marker([lokasi_array[i][1],lokasi_array[i][2]],{icon:iconYellow})
+        .bindPopup(lokasi_array[i][0]) <-- Menambahkan PopUp, ketika di klik maka akan langsung kelihatan keterangan dari pasarnya
+        .addTo(map);
+    }
+
+23. Pada tampilan marker = new L.marker([lokasi_array[i][1],lokasi_array[i][2]])                                                      pasar nya itu = 0   -3.8757792,122 = 1, dan 1066099 = 2
+    copy dari   var marker = L.marker([-3.8528901,122.072124]) ubah menjadi L.marker([lokasi_array[i][1],lokasi_array[i][2]]) jadi -> ["Pasar Wawotobi", -3.8757792,122.1066099],
+
+24. Selanjutnya menambahkan icon pada markernya nya agar bisa dibedakan mana untuk lokasi ini dan itu
+// Menambahkan Icon Yellow
+      var iconYellow = L.icon({
+        iconUrl: 'img/yellow.png',
+        iconSize: [60,60]
+      });
+
+      // Menambahkan Icon Red
+      var iconRed = L.icon({
+        iconUrl: 'img/red.png',
+        iconSize: [60,60]
+      });
+nah pada bagian for
+        marker = new L.marker([lokasi_array[i][1],lokasi_array[i][2]],{icon:iconYellow}) <-- jangan lupa menambahkan {icon:iconYellow}
+
+
+25. Menambahkan array bertingkat
+// Array Bertingkat
+    var lokasi_array_bertingkat = [{
+        "Provinsi": "Sulawesi Tenggara",
+        "Kota": "Kendari",
+        "lat": -3.996626,
+        "lng": 122.5047248
+
+    },
+
+    {
+        "Provinsi": "Sulawesi Tenggara",
+        "Kota": "Unaaha",
+        "lat": -3.8547217,
+        "lng": 122.0451679
+
+    }
+
+];
+
+-> ubah tampilan for nya, yang tadinya ini 
+    
+    for(var i=0; i<lokasi_array.length; i++){
+        marker = new L.marker([lokasi_array[i][1],lokasi_array[i][2]],{icon:iconYellow})
+        .bindPopup(lokasi_array[i][0])
+        .addTo(map);
+    }
+
+-> menjadi 
+    
+    for(var i=0; i<lokasi_array_bertingkat.length; i++){
+        var popup = 'Provinsi : ' + lokasi_array_bertingkat[i].Provinsi <-- Menambahkan PopUp untuk memperlihatkan keterangan dari markernya jika di klik
+                    + '<br>' +
+                    'Kota : ' + lokasi_array_bertingkat[i].Kota
+
+        marker = new L.marker([lokasi_array_bertingkat[i].lat,lokasi_array_bertingkat[i].lng],{icon:iconRed})
+        .bindPopup(popup)
+        .addTo(map);
+    }
+
