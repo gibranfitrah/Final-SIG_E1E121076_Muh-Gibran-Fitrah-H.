@@ -9,9 +9,13 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <style type="text/css">
-      #map {
-        height: 80vh;
-      }
+      #map { height: 600px; }
+  .enlarge {
+    transition: transform 0.5s ease;
+  }
+  .enlarge:hover {
+    transform: scale(2);
+  }
     </style>
   </head>
   <body>
@@ -43,7 +47,8 @@
       <ul id="locationList" class="list-group"></ul>
     </div>
 
-    <script type="text/javascript">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script type="text/javascript">
   var map = L.map('map').setView([-3.8526158, 122.0712067], 5);
 
   L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -70,7 +75,7 @@
 
   lokasi_array.forEach(function(location) {
     var marker = L.marker([location[1], location[2]], {icon: iconYellow})
-      .bindPopup(`<b>${location[0]}</b><br><img src="${location[3]}" width="100" /><br>${location[4]}`)
+      .bindPopup(`<b>${location[0]}</b><br><img src="${location[3]}" width="100" class="enlarge" /><br>${location[4]}`)
       .addTo(map);
     markers.push(marker);
     addLocationToList(location[0], location[1], location[2], location[3], location[4]);
